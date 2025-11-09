@@ -105,7 +105,7 @@ for (String[] user : UserData.users) {
             jTable1.getColumnModel().getColumn(12).setResizable(false);
         }
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 100, 550, 180));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 100, 550, 250));
 
         btnEdit.setBackground(new java.awt.Color(232, 197, 106));
         btnEdit.setFont(new java.awt.Font("Pixel Georgia", 0, 24)); // NOI18N
