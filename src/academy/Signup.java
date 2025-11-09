@@ -16,6 +16,12 @@ public class Signup extends javax.swing.JFrame {
     
     public Signup() {
         initComponents();
+        
+        DefaultTableModel tblModel = (DefaultTableModel) jTable1.getModel();
+tblModel.setRowCount(0); // clear first
+for (String[] user : UserData.users) {
+    tblModel.addRow(user);
+}
      
         this.setTitle("Registration");
         
@@ -53,6 +59,7 @@ public class Signup extends javax.swing.JFrame {
         txtContact = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         txtAddress = new javax.swing.JTextField();
+        btnLogin = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         txtNationality = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
@@ -131,7 +138,7 @@ public class Signup extends javax.swing.JFrame {
                 btnAddActionPerformed(evt);
             }
         });
-        getContentPane().add(btnAdd, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 620, -1, -1));
+        getContentPane().add(btnAdd, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 620, -1, -1));
 
         txtReligion.setBackground(new java.awt.Color(236, 221, 193));
         txtReligion.setFont(new java.awt.Font("TimesNewPixel", 0, 20)); // NOI18N
@@ -260,6 +267,17 @@ public class Signup extends javax.swing.JFrame {
         });
         getContentPane().add(txtAddress, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 270, 420, 30));
 
+        btnLogin.setBackground(new java.awt.Color(232, 197, 106));
+        btnLogin.setFont(new java.awt.Font("Pixel Georgia", 0, 24)); // NOI18N
+        btnLogin.setForeground(new java.awt.Color(102, 51, 0));
+        btnLogin.setText("go to login");
+        btnLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLoginActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 630, -1, -1));
+
         jLabel7.setFont(new java.awt.Font("Pixel Georgia", 0, 18)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(0, 0, 0));
         jLabel7.setText("Address");
@@ -383,6 +401,9 @@ public class Signup extends javax.swing.JFrame {
             String data [] = {txtFullname.getText(),txtAge.getText(),txtNationality.getText(),txtDateofbirth.getText(),txtAddress.getText(),txtContact.getText(),txtEmail.getText(),txtYear.getText(),txtCourse.getText(),txtReligion.getText(),txtUsername.getText(),txtGender.getText(),txtPassword.getText()};
             DefaultTableModel tblModel = (DefaultTableModel)jTable1.getModel();
             tblModel.addRow(data);
+           
+            UserData.addUser(data);
+            
             JOptionPane.showMessageDialog(this,"Goodjob, You may now login" );
             //clear text field after adds
             txtFullname.setText("Lastname, Firstname, Middlename");
@@ -447,25 +468,48 @@ public class Signup extends javax.swing.JFrame {
         // TODO add your handling code here:
         
         DefaultTableModel tblModel = (DefaultTableModel) jTable1.getModel();
-        
-        if (jTable1.getSelectedRowCount() == 1) {
-            tblModel.removeRow(jTable1.getSelectedRow());
-            
-        }else{
-            if(jTable1.getRowCount()==0) {
-                JOptionPane.showMessageDialog(this,"Select a row to delete");
-            }else{
-                JOptionPane.showMessageDialog(this, "Selecet singular Row to delete");
-                
-                
-            }
+    
+    int selectedRow = jTable1.getSelectedRow();
+    
+    if (selectedRow != -1) { // row is selected
+        tblModel.removeRow(selectedRow);          // remove from table
+        UserData.users.remove(selectedRow);       // remove from UserData as well SO REAL
+        JOptionPane.showMessageDialog(this, "Entree Deleted");
+    } else {
+        if(tblModel.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(this,"No row to delete");
+        } else {
+            JOptionPane.showMessageDialog(this, "Select a single row to delete");
         }
+    }
+    
+
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
         // TODO add your handling code here:
         DefaultTableModel tblModel = (DefaultTableModel) jTable1.getModel();
         if (jTable1.getSelectedRowCount()== 1){
+            
+        int selectedRow = jTable1.getSelectedRow();
+String[] updatedRow = {
+    txtFullname.getText(),
+    txtAge.getText(),
+    txtNationality.getText(),
+    txtDateofbirth.getText(),
+    txtAddress.getText(),
+    txtContact.getText(),
+    txtEmail.getText(),
+    txtYear.getText(),
+    txtCourse.getText(),
+    txtReligion.getText(),
+    txtUsername.getText(),
+    txtGender.getText(),
+    txtPassword.getText()
+};
+
+// Update the UserData list
+UserData.users.set(selectedRow, updatedRow);
             
             String Fullname = txtFullname.getText();
             String Age = txtAge.getText();
@@ -513,10 +557,18 @@ public class Signup extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtPasswordActionPerformed
 
+    private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+        
+        new Login().setVisible(true);
+    }//GEN-LAST:event_btnLoginActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnEdit;
+    private javax.swing.JButton btnLogin;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

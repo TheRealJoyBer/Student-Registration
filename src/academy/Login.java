@@ -3,6 +3,7 @@ package academy;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.Timer;
 
 
@@ -32,7 +33,7 @@ public class Login extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel6 = new javax.swing.JLabel();
-        jToggleButton1 = new javax.swing.JToggleButton();
+        tgbtnShowpassword = new javax.swing.JToggleButton();
         jLabel3 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -49,11 +50,16 @@ public class Login extends javax.swing.JFrame {
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/logo2.png"))); // NOI18N
         getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 0, -1, -1));
 
-        jToggleButton1.setBackground(new java.awt.Color(232, 197, 106));
-        jToggleButton1.setFont(new java.awt.Font("TimesNewPixel", 0, 14)); // NOI18N
-        jToggleButton1.setForeground(new java.awt.Color(0, 0, 0));
-        jToggleButton1.setText("show password");
-        getContentPane().add(jToggleButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 540, -1, -1));
+        tgbtnShowpassword.setBackground(new java.awt.Color(232, 197, 106));
+        tgbtnShowpassword.setFont(new java.awt.Font("TimesNewPixel", 0, 14)); // NOI18N
+        tgbtnShowpassword.setForeground(new java.awt.Color(0, 0, 0));
+        tgbtnShowpassword.setText("show password");
+        tgbtnShowpassword.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tgbtnShowpasswordActionPerformed(evt);
+            }
+        });
+        getContentPane().add(tgbtnShowpassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 540, -1, -1));
 
         jLabel3.setFont(new java.awt.Font("Pixel Georgia", 0, 12)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 204, 102));
@@ -76,6 +82,11 @@ public class Login extends javax.swing.JFrame {
         btnExit.setText("Exit");
         btnExit.setBorder(new javax.swing.border.MatteBorder(null));
         btnExit.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        btnExit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExitActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnExit, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 752, 80, 50));
 
         btnSignup.setBackground(new java.awt.Color(232, 197, 106));
@@ -150,8 +161,37 @@ timer.start();
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         // TODO add your handling code here:
+        String username = txtUsername.getText().trim();
+String password = txtPassword.getText().trim();
+
+if (UserData.validateUser(username, password)) {
+    JOptionPane.showMessageDialog(this, "Login successful!");
+    this.dispose();
+    new Menu().setVisible(true);
+    
+} else {
+    JOptionPane.showMessageDialog(this, "Invalid username or password!");
+}
+
         
     }//GEN-LAST:event_btnLoginActionPerformed
+
+    private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
+        // TODO add your handling code here:
+        System.exit(0); // exits the entire program
+    }//GEN-LAST:event_btnExitActionPerformed
+
+    private void tgbtnShowpasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tgbtnShowpasswordActionPerformed
+        // TODO add your handling code here:
+        //para ma kita ang password with a toggle button crzyyyy
+        tgbtnShowpassword.addActionListener(e -> {
+    if (tgbtnShowpassword.isSelected()) {
+        txtPassword.setEchoChar((char)0); // show password
+    } else {
+        txtPassword.setEchoChar('•');    // hide password, use whatever char you want
+    }
+});
+    }//GEN-LAST:event_tgbtnShowpasswordActionPerformed
 
     /**
      * @param args the command line arguments
@@ -187,7 +227,7 @@ timer.start();
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JToggleButton jToggleButton1;
+    private javax.swing.JToggleButton tgbtnShowpassword;
     private javax.swing.JPasswordField txtPassword;
     private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables
